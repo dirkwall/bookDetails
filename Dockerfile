@@ -1,11 +1,10 @@
-FROM golang:stretch as builder
+FROM golang:1.11.4 as builder
 WORKDIR /go/src/github.com/dirkwall/bookDetails
 RUN go get -d -v github.com/gorilla/mux
 COPY main.go .
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '-linkmode=external' -o bookDetails main.go 
-#CMD ["./bookDetails"]
+RUN GOOS=linux go build -a -ldflags -linkmode=external -installsuffix cgo -o bookDetails .
 
-FROM golang:alpine
-COPY --from=builder /go/src/github.com/dirkwall/bookDetails/bookDetails /usr/bin/
-CMD ["/usr/bin/bookDetails"]
+FROM debian:jessie-slim
+COPY --from=builder /go/src/github.com/dirkwall/bookDetails/bookDetails /
+CMD ["/bookDetails"]
 EXPOSE 8000
