@@ -7,4 +7,4 @@ RUN GOOS=linux go build -a -ldflags -linkmode=external -installsuffix cgo -o boo
 FROM debian:jessie-slim
 COPY --from=builder /go/src/github.com/dirkwall/bookDetails/bookDetails /
 CMD ["/bookDetails"]
-EXPOSE 8000
+EXPOSE 9080

@@ -101,7 +101,7 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/health", Health)
 	router.HandleFunc("/details/{id}", GetDetails)
-	log.Fatal(http.ListenAndServe(":8000", router))
+	log.Fatal(http.ListenAndServe(":9080", router))
 }
 
 // Health returns health status of service
